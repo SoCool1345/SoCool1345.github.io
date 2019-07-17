@@ -160,12 +160,98 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-git语法总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>初始化一个Git仓库，使用git init命令。</p>
+<p>添加文件到Git仓库，分两步：</p>
+<ol>
+<li><p>使用命令<code>git add &lt;file&gt;</code>,可反复多次使用，添加多个文件；</p>
+</li>
+<li><p>使用命令<code>git commit -m &lt;message&gt;</code>，完成。</p>
+</li>
+<li><p>要随时掌握工作区的状态，使用<code>git status</code>命令。</p>
+</li>
+<li><p>如果<code>git status</code>告诉你有文件被修改过，用<code>git diff</code>可以查看修改内容。</p>
+</li>
+<li><p><code>HEAD</code>指向的版本就是当前版本，因此，Git允许我们在版本的历史之间穿梭，使用命令<code>git reset --hard commit_id</code>。</p>
+</li>
+<li><p>穿梭前，用<code>git log</code>可以查看提交历史，以便确定要回退到哪个版本。</p>
+</li>
+<li><p>要重返未来，用<code>git reflog</code>查看命令历史，以便确定要回到未来的哪个版本。</p>
+</li>
+<li><p>场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令<code>git checkout -- file</code>。</p>
+</li>
+<li><p>场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令<code>git reset HEAD &lt;file&gt;</code>，就回到了场景1，第二步按场景1操作。</p>
+</li>
+<li><p>场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。</p>
+</li>
+<li><p>命令<code>git rm</code>用于删除一个文件。如果一个文件已经被提交到版本库，那么你永远不用担心误删，但是要小心，你只能恢复文件到最新版本，<strong>你会丢失最近一次提交后你修改的内容</strong>。</p>
+</li>
+<li><p>ssh公钥加入github,要关联一个远程库，使用命令<code>git remote add origin git@server-name:path/repo-name.git</code></p>
+</li>
+<li><p>关联后，使用命令<code>git push -u origin master</code>第一次推送master分支的所有内容</p>
+</li>
+<li><p>此后，每次本地提交后，只要有必要，就可以使用命令<code>git push origin master</code>推送最新修改</p>
+</li>
+<li><p>要克隆一个仓库，首先必须知道仓库的地址，然后使用<code>git clone+地址</code>命令克隆。</p>
+</li>
+<li><p>Git鼓励大量使用分支：</p>
+<p>查看分支：git branch<br>创建分支：git branch <name><br>切换分支：git checkout <name><br>创建+切换分支：git checkout -b <name><br>合并某分支到当前分支：git merge <name><br>删除分支：git branch -d <name>  </name></name></name></name></name></p>
+</li>
+<li><p>当Git无法自动合并分支时，就必须首先解决冲突。解决冲突后，再提交，合并完成。<br>解决冲突就是把Git合并失败的文件手动编辑为我们希望的内容，再提交。<br>用git log –graph命令可以看到分支合并图。</p>
+</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/07/17/git语法总结/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-文本编辑器的问题" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>#文本编辑器<br>使用Windows的童鞋要特别注意：</p>
+        <h1 id="文本编辑器"><a href="#文本编辑器" class="headerlink" title="文本编辑器"></a>文本编辑器</h1><p>使用Windows的童鞋要特别注意：</p>
 <p>千万不要使用Windows自带的记事本编辑任何文本文件。原因是Microsoft开发记事本的团队使用了一个非常弱智的行为来保存UTF-8编码的文件，他们自作聪明地在每个文件开头添加了0xefbbbf（十六进制）的字符，你会遇到很多不可思议的问题，比如，网页第一行可能会显示一个“?”，明明正确的程序一编译就报语法错误，等等，都是由记事本的弱智行为带来的。建议你下载Notepad++代替记事本，不但功能强大，而且免费！记得把Notepad++的默认编码设置为UTF-8 without BOM即可</p>
 
       
@@ -246,7 +332,7 @@
 <li>234  </li>
 </ul>
 <ul>
-<li>2434<br><a href="http://www.baidu.com/" target="_blank" rel="noopener">http://www.baidu.com/</a><br><a href="mailto:&#x61;&#x64;&#100;&#114;&#101;&#115;&#115;&#x40;&#x65;&#120;&#97;&#109;&#112;&#108;&#101;&#x2e;&#99;&#111;&#x6d;" target="_blank" rel="noopener">&#x61;&#x64;&#100;&#114;&#101;&#115;&#115;&#x40;&#x65;&#120;&#97;&#109;&#112;&#108;&#101;&#x2e;&#99;&#111;&#x6d;</a><br>12<code>33333333333333</code>12<br><code>There is a literal backtick (`) here.</code><br>A single backtick in a code span: <code>`</code><br>A backtick-delimited string in a code span: <code>`foo`</code>  </li>
+<li>2434<br><a href="http://www.baidu.com/" target="_blank" rel="noopener">http://www.baidu.com/</a><br><a href="mailto:&#x61;&#x64;&#x64;&#114;&#101;&#x73;&#115;&#x40;&#101;&#120;&#x61;&#x6d;&#112;&#108;&#101;&#x2e;&#x63;&#x6f;&#x6d;" target="_blank" rel="noopener">&#x61;&#x64;&#x64;&#114;&#101;&#x73;&#115;&#x40;&#101;&#120;&#x61;&#x6d;&#112;&#108;&#101;&#x2e;&#x63;&#x6f;&#x6d;</a><br>12<code>33333333333333</code>12<br><code>There is a literal backtick (`) here.</code><br>A single backtick in a code span: <code>`</code><br>A backtick-delimited string in a code span: <code>`foo`</code>  </li>
 </ul>
 <p><img src="https://p1.ssl.qhmsg.com/dr/270_500_/t01a98dbef753f28947.jpg?size=441x500" alt="12"><br><img src="./img/203c8deca69de44f67ec728736bcaf10_t01a98dbef753f28947_size=441x500.jpg" alt="1">  </p>
 <p><a href="https://www.baidu.com" target="_blank" rel="noopener">百度</a>  </p>
