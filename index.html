@@ -160,25 +160,82 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-New Document" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>采用下面的方法，对于给定两个整数a,b，下面的异或运算可以实现a,b的交换，而无需借助第3个临时变量：</p>
+<pre><code>a = a ^ b;
+b = a ^ b;
+a = a ^ b;</code></pre><p>减而治之<br>分而治之</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/07/25/New Document/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-git语法总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>初始化一个Git仓库，使用git init命令。</p>
-<p>添加文件到Git仓库，分两步：</p>
+        <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>初始化一个Git仓库，使用git init命令。<br><code>git help 命令</code>：显示本地帮助文件</p>
 <ol>
-<li><p>使用命令<code>git add &lt;file&gt;</code>,可反复多次使用，添加多个文件；</p>
-</li>
-<li><p>使用命令<code>git commit -m &lt;message&gt;</code>，完成。</p>
+<li><p>添加文件到Git仓库，分两步：使用命令<code>git add &lt;file&gt;</code>,可反复多次使用，添加多个文件；<br>使用命令<code>git commit -m &lt;message&gt;</code>，完成。</p>
 </li>
 <li><p>要随时掌握工作区的状态，使用<code>git status</code>命令。</p>
 </li>
-<li><p>如果<code>git status</code>告诉你有文件被修改过，用<code>git diff</code>可以查看修改内容。</p>
+<li><p>如果<code>git status</code>告诉你有文件被修改过</p>
+</li>
+<li><p>用<code>git diff &lt;file&gt;</code>可以查看修改内容(与缓冲区比较），git diff &lt;本地库历史版本&gt; [file],与文件库某个版本比较，不指定文件名将比较所有文件。</p>
 </li>
 <li><p><code>HEAD</code>指向的版本就是当前版本，因此，Git允许我们在版本的历史之间穿梭，使用命令<code>git reset --hard commit_id</code>。</p>
 </li>
+<li><p><code>git reset --hard head^</code>^后退一个版本。可多个连用，退多步</p>
+</li>
+<li><p><code>git reset --hard head~3</code>后退3个版本</p>
+</li>
+<li></li>
 <li><p>穿梭前，用<code>git log</code>可以查看提交历史，以便确定要回退到哪个版本。</p>
+</li>
+<li><p><code>git log -oneline</code>是从当前版本显示历史版本</p>
 </li>
 <li><p>要重返未来，用<code>git reflog</code>查看命令历史，以便确定要回到未来的哪个版本。</p>
 </li>
@@ -201,8 +258,38 @@
 <li><p>Git鼓励大量使用分支：</p>
 <p>查看分支：git branch<br>创建分支：git branch <name><br>切换分支：git checkout <name><br>创建+切换分支：git checkout -b <name><br>合并某分支到当前分支：git merge <name><br>删除分支：git branch -d <name>  </name></name></name></name></name></p>
 </li>
-<li><p>当Git无法自动合并分支时，就必须首先解决冲突。解决冲突后，再提交，合并完成。<br>解决冲突就是把Git合并失败的文件手动编辑为我们希望的内容，再提交。<br>用git log –graph命令可以看到分支合并图。</p>
+<li><p>当Git无法自动合并分支时，就必须首先解决冲突。解决冲突后，再提交，合并完成。<br>解决冲突就是把Git合并失败的文件手动编辑为我们希望的内容，再提交。<br>注意：此时commit一定不能带文件名</p>
 </li>
+<li><p>用<code>git log --graph</code>命令可以看到分支合并图。</p>
+</li>
+<li><p>当手头工作没有完成时，先把工作现场<code>git stash</code>一下，然后去修复bug，修复后，再<code>git stash pop</code>，回到工作现场</p>
+</li>
+<li><p>用<code>git stash list</code> 查看，用<code>git stash apply</code>恢复，但是恢复后，stash内容并不删除，你需要用<code>git stash drop</code>来删除；</p>
+</li>
+<li><p>开发一个新feature，最好新建一个分支；<br>如果要丢弃一个没有被合并过的分支，可以通过<code>git branch -D &lt;name&gt;</code>强行删除。</p>
+</li>
+<li><p>查看远程库信息，使用<code>git remote -v</code>；</p>
+</li>
+</ol>
+<p>本地新建的分支如果不推送到远程，对其他人就是不可见的；</p>
+<p>从本地推送分支，使用<code>git push origin branch-name</code>，如果推送失败，先用<code>git pull</code>抓取远程的新提交；</p>
+<p>在本地创建和远程分支对应的分支，使用<code>git checkout -b branch-name origin/branch-name</code>，本地和远程分支的名称最好一致；</p>
+<p>建立本地分支和远程分支的关联，使用<code>git branch --set-upstream-to=origin/branch-name branch-name</code>；</p>
+<p>从远程抓取分支，使用<code>git pull</code>，如果有冲突，要先处理冲突。</p>
+<ol start="22">
+<li>命令<code>git tag &lt;tagname&gt; &lt;commit id&gt;</code>用于新建一个标签，默认为HEAD，也可以指定一个commit id；</li>
+</ol>
+<p>命令<code>git tag -a &lt;tagname&gt; -m &quot;blablabla...&quot;</code>可以指定标签信息；</p>
+<p>命令<code>git tag</code>可以查看所有标签<br>命令<code>git show &lt;tag&gt;</code>查看标签详细信息</p>
+<ol start="23">
+<li>命令<code>git push origin &lt;tagname&gt;</code>可以推送一个本地标签；</li>
+</ol>
+<p>命令<code>git push origin --tags</code>可以推送全部未推送过的本地标签；</p>
+<p>命令<code>git tag -d &lt;tagname&gt;</code>可以删除一个本地标签；</p>
+<p>命令<code>git push origin :refs/tags/&lt;tagname&gt;</code>可以删除一个远程标签。</p>
+<ol start="24">
+<li><code>git config --global alias.st status</code>以后st就表示status</li>
+<li>查看用户的配置信息：<code>git config --global --list</code></li>
 </ol>
 
       
@@ -252,7 +339,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="文本编辑器"><a href="#文本编辑器" class="headerlink" title="文本编辑器"></a>文本编辑器</h1><p>使用Windows的童鞋要特别注意：</p>
-<p>千万不要使用Windows自带的记事本编辑任何文本文件。原因是Microsoft开发记事本的团队使用了一个非常弱智的行为来保存UTF-8编码的文件，他们自作聪明地在每个文件开头添加了0xefbbbf（十六进制）的字符，你会遇到很多不可思议的问题，比如，网页第一行可能会显示一个“?”，明明正确的程序一编译就报语法错误，等等，都是由记事本的弱智行为带来的。建议你下载Notepad++代替记事本，不但功能强大，而且免费！记得把Notepad++的默认编码设置为UTF-8 without BOM即可</p>
+<p>千万不要使用Windows自带的记事本编辑任何文本文件。原因是Microsoft开发记事本的团队使用了一个非常弱智的行为来保存UTF-8编码的文件，他们自作聪明地在每个文件开头添加了0xefbbbf（十六进制）的字符，你会遇到很多不可思议的问题，比如，网页第一行可能会显示一个“?”，明明正确的程序一编译就报语法错误，等等，都是由记事本的弱智行为带来的。建议你下载Notepad++代替记事本，不但功能强大，而且免费！记得把Notepad++的默认编码设置为UTF-8 without BOM即可<br>使用Windows的童鞋注意了，如果你在资源管理器里新建一个.gitignore文件，它会非常弱智地提示你必须输入文件名，但是在文本编辑器里“保存”或者“另存为”就可以把文件保存为.gitignore了。</p>
 
       
 
@@ -300,7 +387,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>123<br><em>1</em><br><strong>1</strong><br><strong><em>1</em></strong></p>
+        <h1 id="test"><a href="#test" class="headerlink" title="test"></a>test</h1><p>123<br><em>1</em><br><strong>1</strong><br><strong><em>1</em></strong></p>
 <hr>
 <hr>
 <hr>
@@ -332,7 +419,7 @@
 <li>234  </li>
 </ul>
 <ul>
-<li>2434<br><a href="http://www.baidu.com/" target="_blank" rel="noopener">http://www.baidu.com/</a><br><a href="mailto:&#x61;&#x64;&#x64;&#114;&#101;&#x73;&#115;&#x40;&#101;&#120;&#x61;&#x6d;&#112;&#108;&#101;&#x2e;&#x63;&#x6f;&#x6d;" target="_blank" rel="noopener">&#x61;&#x64;&#x64;&#114;&#101;&#x73;&#115;&#x40;&#101;&#120;&#x61;&#x6d;&#112;&#108;&#101;&#x2e;&#x63;&#x6f;&#x6d;</a><br>12<code>33333333333333</code>12<br><code>There is a literal backtick (`) here.</code><br>A single backtick in a code span: <code>`</code><br>A backtick-delimited string in a code span: <code>`foo`</code>  </li>
+<li>2434<br><a href="http://www.baidu.com/" target="_blank" rel="noopener">http://www.baidu.com/</a><br><a href="mailto:&#x61;&#x64;&#x64;&#114;&#x65;&#115;&#115;&#x40;&#x65;&#120;&#x61;&#x6d;&#112;&#x6c;&#101;&#x2e;&#99;&#x6f;&#109;" target="_blank" rel="noopener">&#x61;&#x64;&#x64;&#114;&#x65;&#115;&#115;&#x40;&#x65;&#120;&#x61;&#x6d;&#112;&#x6c;&#101;&#x2e;&#99;&#x6f;&#109;</a><br>12<code>33333333333333</code>12<br><code>There is a literal backtick (`) here.</code><br>A single backtick in a code span: <code>`</code><br>A backtick-delimited string in a code span: <code>`foo`</code>  </li>
 </ul>
 <p><img src="https://p1.ssl.qhmsg.com/dr/270_500_/t01a98dbef753f28947.jpg?size=441x500" alt="12"><br><img src="./img/203c8deca69de44f67ec728736bcaf10_t01a98dbef753f28947_size=441x500.jpg" alt="1">  </p>
 <p><a href="https://www.baidu.com" target="_blank" rel="noopener">百度</a>  </p>
